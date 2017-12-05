@@ -5,6 +5,6 @@ public class Main {
     public static void main(String[] args) {
 	    System.out.println("Hello from IDEA!");
 	    String aString = "Nathan";
-        System.out.println("Yaaaour name is " +aString);
+        System.out.println("Your name is " +aString);
     }
 }
