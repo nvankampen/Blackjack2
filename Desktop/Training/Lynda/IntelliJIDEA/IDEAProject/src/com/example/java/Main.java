@@ -1,6 +1,5 @@
 package com.example.java;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +7,10 @@ public class Main {
     public static void main(String[] args) {
     	String firstValue;
 	    String secondValue;
+	    String operationType;
+		double firstDouble = 0;
+		double secondDouble = 0;
+		double doubleTotal = 0;
 
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter in two numbers to add together");
@@ -15,12 +18,38 @@ public class Main {
 		firstValue = in.nextLine();
 		System.out.println("Enter a second number");
 		secondValue = in.nextLine();
+		System.out.println("Pick an operation: + - * / ");
+		operationType = in.nextLine();
 
-		int firstInt = Integer.parseInt(firstValue);
-		int secondInt = Integer.parseInt(secondValue);
+		try {
+			firstDouble = Double.parseDouble(firstValue);
+		} catch (NumberFormatException e) {
+			System.out.println("The first value of " + firstValue + " is not a valid value");
+			System.exit(0);
+		}
+		try {
+			secondDouble = Double.parseDouble(secondValue);
+		} catch (NumberFormatException e) {
+			System.out.println("The second value of " + secondValue + " is not a valid value");
+			System.exit(0);
+		}
 
-		int intTotal = firstInt + secondInt;
-		System.out.println("The total is " + intTotal);
+
+
+		switch(operationType){
+			case "+": doubleTotal = firstDouble + secondDouble;
+					break;
+			case "-": doubleTotal = firstDouble - secondDouble;
+					break;
+			case "*": doubleTotal = firstDouble * secondDouble;
+					break;
+			case "/": doubleTotal	= firstDouble / secondDouble;
+					break;
+			default: System.out.println("The operator of " + operationType + " is an incorrect value");
+					System.exit(0);
+					break;
+		}
+		System.out.println("The result is " + Math.round(doubleTotal * 100.0)/100.0);
 
 	}
 }
