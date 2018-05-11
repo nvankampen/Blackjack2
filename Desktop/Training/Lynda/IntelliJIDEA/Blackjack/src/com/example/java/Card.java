@@ -9,7 +9,8 @@ public class Card {
      * List of all class variables
      * "cardName" is an array of all possible card names represented as strings
      * "cardSuit" is an array of all possible card suits
-     * "cardValue" holds the value associated with the specific cardName.  It lines up with indexes of cardName.
+     * "cardValue" holds the value associated with the specific cardName.  It lines up with indexes of cardName. The "1"
+     *      final position use the second value of an Ace (11 or 1)
      * "arrayName" used to pick value in CardName array
      * "arraySuit" used to pick value in cardSuit array
      */
