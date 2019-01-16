@@ -5,27 +5,27 @@
  */
 package com.example.java;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.*;
 /**
  * @author Nathan Van Kampen
- * @version 1.0
+ * @version 1.1
  * @since 2018-01-03
  */
 public class Main {
     /**
      * Create class variables for Main class.
-     * "myHand" represents cards a user draws from a deck from the Card class.
-     * "dealerHand" represents cards a dealer draws from a deck from the Card class.
+     * "playerHand" represents cards in the player's hand.
+     * "dealerHand" represents cards in a dealer's hand.
      * "myBusted" used to keep track of when user goes over 21
      * "playAgainAnswer" used to determine if the game should restart
      * "gamesWon" tracks total games won by the user
      * "gamesLost" tracks total games lost by the user
      */
-    private static ArrayList<Card> myHand = new ArrayList();
-    private static ArrayList<Card> dealerHand = new ArrayList();
+
+    private static Hand playerHand = new Hand();
+    private static Hand dealerHand = new Hand();
     private static boolean myBusted = false;
     private static String playAgainAnswer = "y";
     private static int gamesWon = 0;
@@ -35,15 +35,16 @@ public class Main {
         /**
          * Main method contains calls to methods that run the program
          */
+
         while (playAgainAnswer.equalsIgnoreCase("y")) {
             myBusted = false;
             out.println("Welcome to Blackjack");
-            out.println("");
+            out.println();
             out.println("The dealer draws first");
 
             dealerDrawCard();
             out.println("The second card remains hidden");
-            out.println("");
+            out.println();
             out.println("Now your cards are dealt");
             /**
              * The following are method calls related to the user's hand playing black jack.
@@ -53,7 +54,7 @@ public class Main {
             checkMyTotal();
             myHandTotal();
             myHitOrStay();
-            out.println("");
+            out.println();
 
             /**
              * The following if statement is for the dealer hand and only occurs if the user didn't already go bust.
@@ -68,7 +69,7 @@ public class Main {
             }
             playAgain();
         }
-        out.println("");
+        out.println();
         out.println("Thanks for playing, good bye.");
     }
 
@@ -76,24 +77,23 @@ public class Main {
         /**
          * Method for drawing a new card from the deck and adding it to the user's hand
          */
-        Card myCard = new Card();
-        myHand.add(myCard);
-        out.println("A " + myCard.getCardName() + " of " + myCard.getCardSuit() +
-                " was drawn for a value of: " + myCard.getCardValue());
+        playerHand.drawCard();
+        out.println("A " + playerHand.getLastCardName() + " of " + playerHand.getLastCardSuit() +
+                " was drawn for a value of: " + playerHand.getLastCardValue());
     }
 
     private static void myHandTotal() {
         /**
          * Prints out user's total hand value
          */
-        out.println("Hand Total = " + iterateUserHandTotal());
+        out.println("Hand Total = " + playerHand.getHandValue());
     }
 
     private static void dealerHandTotal() {
         /**
-         * Prints out daler's total hand value
+         * Prints out dealer's total hand value
          */
-        out.println("Hand Total = " + iterateDealerHandTotal());
+        out.println("Hand Total = " + dealerHand.getHandValue());
     }
 
     private static void myHitOrStay() {
@@ -129,22 +129,13 @@ public class Main {
          * and the game ends unless they have an Ace card, in which case the value of the Ace
          * is changed from 11 to 1.
          */
-        if (iterateUserHandTotal() > 21) {
-            /**
-             * Iterates through the user's hand looking for Aces and changes their value to 1. Recursion used
-             * to iterate through and only change one Ace at a time before re-evaluating if hand exceeds 21.
-            */
-            int searchListLength = myHand.size();
-            for (int i = 0; i < searchListLength; i++) {
-                if (myHand.get(i).getCardValue() == 11) {
-                    myHand.get(i).setAceValue();
-                    checkMyTotal();
-                }
-            }
+        if (playerHand.getHandValue() > 21) {
+            playerHand.checkHandAces();
+
             /**
              * If hand is greater than 21 and there are no aces, the user loses.
              */
-            if (iterateUserHandTotal() > 21){
+            if (playerHand.getHandValue() > 21){
                 out.println("You went over 21, you lose this hand. The Dealer wins!");
                 gamesLost++;
                 myBusted = true;
@@ -158,28 +149,24 @@ public class Main {
          * will draw a card.  Upon exceeding 21, method iterates dealer's hand for Aces and converting one at a
          * time to a value of 1 before being re-evaluated.
          */
-        if (iterateDealerHandTotal() == 21) {
-            out.println("The dealer has " + iterateDealerHandTotal() + ". The dealer wins!");
+        if (dealerHand.getHandValue() == 21) {
+            out.println("The dealer has " + dealerHand.getHandValue() + ". The dealer wins!");
             gamesLost++;
-        } else if (iterateDealerHandTotal() < iterateUserHandTotal()) {
+        } else if (dealerHand.getHandValue() < playerHand.getHandValue()) {
             dealerDrawCard();
             checkDealerTotal();
-        } else if (iterateDealerHandTotal() > 21) {
+        } else if (dealerHand.getHandValue() > 21) {
             /**
              * Iterate through dealer's hand looking for Aces to convert to value of 1. Uses recursion to re-evaluate
              * if additional aces require having their value adjusted to 1.
              */
-            int searchListLength = dealerHand.size();
-            for (int i = 0; i < searchListLength; i++) {
-                if (dealerHand.get(i).getCardValue() == 11) {
-                    dealerHand.get(i).setAceValue();
-                    checkDealerTotal();
-                }
-            }
-            out.println("The dealer has " + iterateDealerHandTotal() + " and went over 21. You win!");
+
+                    dealerHand.checkHandAces();
+
+            out.println("The dealer has " + dealerHand.getHandValue() + " and went over 21. You win!");
             gamesWon++;
-        } else if (iterateDealerHandTotal() >= iterateUserHandTotal()) {
-            out.println("the dealer has " + iterateDealerHandTotal() + " and beats your " + iterateUserHandTotal() + ". The dealer wins!");
+        } else if (dealerHand.getHandValue() >= playerHand.getHandValue()) {
+            out.println("the dealer has " + dealerHand.getHandValue() + " and beats your " + playerHand.getHandValue() + ". The dealer wins!");
             gamesLost++;
         }
     }
@@ -189,12 +176,12 @@ public class Main {
          * at the end of the game before the start of the next game.
          */
         Scanner in = new Scanner(System.in);
-        out.println("");
+        out.println();
         out.println("Your current win:loss ratio is: " + gamesWon + " : " + gamesLost);
         out.println("Would you like to play again? 'y/n'? ");
         playAgainAnswer = in.nextLine();
-        myHand.clear();
-        dealerHand.clear();
+        playerHand.clearHand();
+        dealerHand.clearHand();
 
         if (playAgainAnswer.equalsIgnoreCase("y")) {
         } else if (playAgainAnswer.equalsIgnoreCase("n")) {
@@ -207,34 +194,10 @@ public class Main {
         /**
          * Method for drawing a new card from the deck and adding it to the dealer's hand
          */
-        Card myCard = new Card();
-        dealerHand.add(myCard);
-        out.println("A " + myCard.getCardName() + " of " + myCard.getCardSuit() +
-                " was drawn for a value of: " + myCard.getCardValue());
+        dealerHand.drawCard();
+        out.println("A " + dealerHand.getLastCardName() + " of " + dealerHand.getLastCardSuit() +
+                " was drawn for a value of: " + dealerHand.getLastCardValue());
     }
-    private static int iterateUserHandTotal(){
-        /**
-         * Method used to calculate the total value of the user's hand.
-         */
-        int searchListLength = myHand.size();
-        int userHandTotal = 0;
-        for (int i = 0; i < searchListLength; i++) {
-            userHandTotal = userHandTotal + myHand.get(i).getCardValue();
-        }
-        return userHandTotal;
-    }
-    private static int iterateDealerHandTotal(){
-        /**
-         * Method used to calculate the total value of the dealer's hand.
-         */
-        int searchListLength = dealerHand.size();
-        int dealerHandTotal = 0;
-        for (int i = 0; i < searchListLength; i++) {
-            dealerHandTotal = dealerHandTotal + dealerHand.get(i).getCardValue();
-        }
-        return dealerHandTotal;
-    }
-
 }
 
 

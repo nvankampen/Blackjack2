@@ -4,7 +4,7 @@ package com.example.java;
  * Card class contains all possible cards in a deck by name and suit type.  When instantiated, a random
  * card name (which is associated with a value) and a random suit is chosen
  */
-public class Card {
+class Card {
     /**
      * List of all class variables
      * "cardName" is an array of all possible card names represented as strings
@@ -22,9 +22,9 @@ public class Card {
     private int arraySuit;
     private int arrayValue;
 
-    public Card() {
+    Card() {
         /**
-         * When a Card object is initalized, it is set with a random arrayName
+         * When a Card object is initialized, it is set with a random arrayName
          * and arraySuit integer for selecting appropriate strings from cardName
          * and cardSuit
          */
@@ -33,7 +33,7 @@ public class Card {
         arrayValue = arrayName;
     }
 
-    public String getCardName() {
+    String getCardName() {
         /**
          * Returns the cardName based on the specific value of arrayName
          * @return cardName
@@ -41,7 +41,7 @@ public class Card {
         return cardName[arrayName];
     }
 
-    public String getCardSuit() {
+    String getCardSuit() {
         /**
          * Returns the cardSuit based on the specific value of arraySuit
          * @return cardSuit
@@ -50,7 +50,7 @@ public class Card {
     }
 
 
-    public int getCardValue() {
+    int getCardValue() {
         /**
          * Based on the cardName of the Card, sets "cardValue" to the appropriate integer
          * value.
@@ -60,7 +60,7 @@ public class Card {
         return cardValue[arrayValue];
     }
 
-    public void setAceValue() {
+    void setAceValue() {
         /**
          * Sets the value of the card from 11 to 1.  Index position 13 is a value of 1.
          */
