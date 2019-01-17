@@ -27,7 +27,7 @@ public class Main {
     private static Hand playerHand = new Hand();
     private static Hand dealerHand = new Hand();
     private static Money myMoney = new Money();
-    private static boolean myBusted = false;
+    private static boolean myBusted = false;  //TODO: Would probably name isBusted
     private static int gamesWon = 0;
     private static int gamesLost = 0;
 
@@ -39,42 +39,42 @@ public class Main {
      * Main method contains calls to methods that run the program
      */
     private static void mainBlackJackGame() {
-            myBusted = false;
-            checkMoneyTotal();
-            out.println("Welcome to Blackjack");
-            out.println("You currently have $" + myMoney.getMoneyTotal());
-            out.println();
-            askBetAmount();
-            out.println();
-            out.println("The dealer draws first");
+        myBusted = false;
+        checkMoneyTotal();
+        out.println("Welcome to Blackjack");
+        out.println("You currently have $" + myMoney.getMoneyTotal());
+        out.println(); //TODO: you can add + "\r\n" to the previous println statement.
+        askBetAmount();
+        out.println();
+        out.println("The dealer draws first");
 
+        dealerDrawCard();
+        out.println("The second card remains hidden");
+        out.println();
+        out.println("Now your cards are dealt");
+
+        /*
+         * The following are method calls related to the user's hand playing black jack.
+         */
+        myDrawCard();
+        myDrawCard();
+        checkMyTotal();
+        myHandTotal();
+        myHitOrStay();
+        out.println();
+
+        /*
+         * The following if statement is for the dealer hand and only occurs if the user didn't already go bust.
+         */
+        if (myBusted == false) {
+
+            out.println("The Dealer shows his second card");
             dealerDrawCard();
-            out.println("The second card remains hidden");
-            out.println();
-            out.println("Now your cards are dealt");
-
-            /*
-             * The following are method calls related to the user's hand playing black jack.
-             */
-            myDrawCard();
-            myDrawCard();
-            checkMyTotal();
-            myHandTotal();
-            myHitOrStay();
-            out.println();
-
-            /*
-             * The following if statement is for the dealer hand and only occurs if the user didn't already go bust.
-             */
-            if (myBusted == false) {
-
-                out.println("The Dealer shows his second card");
-                dealerDrawCard();
-                out.print("Dealer ");
-                dealerHandTotal();
-                checkDealerTotal();
-            }
-            playAgain();
+            out.print("Dealer ");
+            dealerHandTotal();
+            checkDealerTotal();
+        }
+        playAgain();
     }
 
     /**
@@ -91,6 +91,11 @@ public class Main {
      * Asks user how much they'd like to bet
      */
     private static void askBetAmount() {
+        //TODO:
+        //I'd probably re-think this a little.  I would use a loop checking for a correct response rather than using recursion.
+        //I would also do some input validation.  An easy way to do so is to record the line as a string and use a regular expression to parse.
+        //A pattern of ^[0-9]+$ would only match if there is 1 or more digits and only numbers.  Put a non-numeric and it will not match.
+        //Use pattern.matcher to get a boolean result.
         Scanner in = new Scanner(System.in);
         out.println("How much money would you like to bet");
         try {
@@ -207,7 +212,7 @@ public class Main {
             dealerDrawCard();
             checkDealerTotal();
         } else if (dealerHand.getHandValue() > 21) {
-                    dealerHand.checkHandAces();
+            dealerHand.checkHandAces();
             /*
              * If hand is greater than 21 and there are no aces, the user loses.
              */
@@ -254,5 +259,8 @@ public class Main {
                 " was drawn for a value of: " + dealerHand.getLastCardValue());
     }
 }
+
+
+
 
 

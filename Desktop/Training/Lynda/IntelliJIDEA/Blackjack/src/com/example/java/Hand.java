@@ -10,7 +10,7 @@ class Hand {
     private ArrayList<Card> myHand = new ArrayList();
 
     Hand() {
-    }
+    } //TODO: Don't need the constructor if you aren't going to do anything in it.
 
     /**
      * Draws a card and adds it to the hand
@@ -63,8 +63,8 @@ class Hand {
      * Iterates through the hand converting Aces from value 11 to value 1
      */
     void checkHandAces() {
-        int searchListLength = myHand.size();
         //Commented for loop below left in for education/reference purposes
+//        int searchListLength = myHand.size();
 //        for (int i = 0; i < searchListLength; i++) {
 //            if (myHand.get(i).getCardValue() == 11) {
 //                myHand.get(i).setAceValue();
@@ -79,6 +79,6 @@ class Hand {
      * Clears the hand at the start of a new round
      */
     void clearHand() {
-                myHand.clear();
-            }
+        myHand.clear();
+    }
 }

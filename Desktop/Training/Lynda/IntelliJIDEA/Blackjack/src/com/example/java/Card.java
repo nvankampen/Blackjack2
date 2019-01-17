@@ -17,7 +17,10 @@ class Card {
     private String[] cardName = {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
             "Nine", "Ten", "Ace", "Jack", "Queen", "King"};
     private int[] cardValue = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 10, 10, 1};
+    //TODO: Those two arrays could actually be stored in a hashmap.  A hashmap is a key/value pair.  Add like this... mySuit.put("Two", 2)
     private String[] cardSuit = {"Hearts", "Diamonds", "Clubs", "Spades"};
+    //TODO: The above could be another hashmap with the suit name as a key and a full suit as the value.
+    //TODO: Using the hashmap of hashmaps means you have individually addressable cards which can be removed from the deck as they are consumed in game.
     private int arrayName;
     private int arraySuit;
     private int arrayValue;
@@ -65,3 +68,4 @@ class Card {
         arrayValue = 13;
     }
 }
+
