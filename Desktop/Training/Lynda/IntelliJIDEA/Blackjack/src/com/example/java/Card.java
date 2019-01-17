@@ -5,7 +5,7 @@ package com.example.java;
  * card name (which is associated with a value) and a random suit is chosen
  */
 class Card {
-    /**
+    /*
      * List of all class variables
      * "cardName" is an array of all possible card names represented as strings
      * "cardSuit" is an array of all possible card suits
@@ -22,48 +22,46 @@ class Card {
     private int arraySuit;
     private int arrayValue;
 
+    /**
+     When a Card object is initialized, it is set with a random arrayName
+     and arraySuit integer for selecting appropriate strings from cardName
+     and cardSuit
+     */
     Card() {
-        /**
-         * When a Card object is initialized, it is set with a random arrayName
-         * and arraySuit integer for selecting appropriate strings from cardName
-         * and cardSuit
-         */
         arrayName = (int) (Math.random() * 13);
         arraySuit = (int) (Math.random() * 3);
         arrayValue = arrayName;
     }
 
+    /**
+     Returns the cardName based on the specific value of arrayName
+     @return cardName
+     */
     String getCardName() {
-        /**
-         * Returns the cardName based on the specific value of arrayName
-         * @return cardName
-         */
         return cardName[arrayName];
     }
 
+    /**
+     Returns the cardSuit based on the specific value of arraySuit
+     @return cardSuit
+     */
     String getCardSuit() {
-        /**
-         * Returns the cardSuit based on the specific value of arraySuit
-         * @return cardSuit
-         */
         return cardSuit[arraySuit];
     }
 
-
+    /**
+     * Based on the cardName of the Card, sets "cardValue" to the appropriate integer
+     * value.
+     * @return cardValue
+     */
     int getCardValue() {
-        /**
-         * Based on the cardName of the Card, sets "cardValue" to the appropriate integer
-         * value.
-         * @return cardValue
-         */
-
         return cardValue[arrayValue];
     }
 
+    /**
+     * Sets the value of the card from 11 to 1.  Index position 13 is a value of 1.
+     */
     void setAceValue() {
-        /**
-         * Sets the value of the card from 11 to 1.  Index position 13 is a value of 1.
-         */
         arrayValue = 13;
     }
 }
